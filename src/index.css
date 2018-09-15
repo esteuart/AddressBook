@@ -1,0 +1,7 @@
+﻿.addrline {
+    padding-left: 20px;
+}
+.name, .address, .phone{font-weight:bold;}
+.name{text-transform:uppercase}
+
+li {padding-bottom: 20px;}
