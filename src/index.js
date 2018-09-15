@@ -1,5 +1,7 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import './index.css';
 
 class AddressForm extends React.Component {
@@ -10,6 +12,14 @@ class AddressForm extends React.Component {
                 name: '',
                 line1: '',
                 line2: '',
+                city: '',
+                state: '',
+                zip: '',
+                phone: ''
+            },
+            errors: {
+                name: '',
+                line1: '',
                 city: '',
                 state: '',
                 zip: '',
@@ -40,37 +50,154 @@ class AddressForm extends React.Component {
         this.setState({ address: addr });
     }
 
-    handleSubmit(event) {
-        this.props.Save(this.state.address);
-        this.setState({
-            address: {
-                name: '',
-                line1: '',
-                line2: '',
-                city: '',
-                state: '',
-                zip: '',
-                phone: ''
-            },
-            buttonText: 'Add'
-        });
+    validate() {
+        let isError = false;
+        const errors = {
+            name: '',
+            isNameError: false,
+            line1: '',
+            isLine1Error: false,
+            city: '',
+            isCityError: false,
+            state: '',
+            isStateError: false,
+            zip: '',
+            isZipError: false,
+            phone: '',
+            isPhoneError: false
+        };
 
+        if (this.state.address.name.trim() === "") {
+            isError = true;
+            errors.name = 'Required';
+            errors.isNameError = true;
+        }
+
+        if (this.state.address.line1.trim() === "") {
+            isError = true;
+            errors.line1 = 'Required';
+            errors.isLine1Error = true;
+        }
+
+        if (this.state.address.city.trim() === "") {
+            isError = true;
+            errors.city = 'Required';
+            errors.isCityError = true;
+        }
+
+        if (this.state.address.state.trim() === "") {
+            isError = true;
+            errors.state = 'Required';
+            errors.isStateError = true;
+        }
+        else if (!/^[A-Z]{2}$/.test(this.state.address.state)) {
+            isError = true;
+            errors.state = 'Please enter a valid two digit state code.';
+            errors.isStateError = true;
+        }
+
+        if (this.state.address.zip.trim() === "") {
+            isError = true;
+            errors.zip = 'Required';
+            errors.isZipError = true;
+        }
+        else if (!/\d{5}(-\d{4})?/.test(this.state.address.zip)) {
+            isError = true;
+            errors.zip = 'Please enter a valid zip code.';
+            errors.isZipError = true;
+        }
+
+        if (this.state.address.phone.trim() === "") {
+            isError = true;
+            errors.phone = 'Required';
+            errors.isPhoneError = true;
+        }
+        else if (!/\d{3}-?\d{3}-?\d{4}/.test(this.state.address.phone))
+        {
+            isError = true;
+            errors.phone = 'Please enter a valid phone number'
+            errors.isPhoneError = true;
+        }
+
+
+        this.setState({ errors: errors });
+
+        return isError;
+    }
+
+    handleSubmit(event) {
         event.preventDefault();
+
+        const err = this.validate();
+        if (!err) {
+            this.props.Save(this.state.address);
+            this.setState({
+                address: {
+                    name: '',
+                    line1: '',
+                    line2: '',
+                    city: '',
+                    state: '',
+                    zip: '',
+                    phone: ''
+                },
+                buttonText: 'Add'
+            });
+        }
     }
 
     render() {
         const addr = this.state.address;
         return (
             <form onSubmit={this.handleSubmit}>
-                <div>Name: <input type='text' name='name' value={addr.name} onChange={this.handleInputChange}></input></div>
-                <div>Address</div>
-                <div>Line 1: <input type='text' name='line1' value={addr.line1} onChange={this.handleInputChange}></input></div>
-                <div>Line 2: <input type='text' name='line2' value={addr.line2} onChange={this.handleInputChange}></input></div>
-                <div>City: <input type='text' name='city' value={addr.city} onChange={this.handleInputChange}></input></div>
-                <div>State: <input type='text' name='state' value={addr.state} onChange={this.handleInputChange}></input></div>
-                <div>Zip Code: <input type='text' name='zip' value={addr.zip} onChange={this.handleInputChange}></input></div>
-                <div>Phone: <input type='text' name='phone' value={addr.phone} onChange={this.handleInputChange}></input></div>
-                <input type='submit' value={this.state.buttonText} className='add'></input>
+                <TextField name='name'
+                    label='Contact Name*'
+                    value={addr.name}
+                    onChange={this.handleInputChange}
+                    helperText={this.state.errors.name}
+                    error={this.state.errors.isNameError}
+                />
+                <div><TextField name='line1'
+                    label='Street Address 1*'
+                    value={addr.line1}
+                    onChange={this.handleInputChange}
+                    helperText={this.state.errors.line1}
+                    error={this.state.errors.isLine1Error}
+                /></div>
+                <div><TextField name='line2'
+                    label='Street Address 2'
+                    value={addr.line2}
+                    onChange={this.handleInputChange}
+                /></div>
+                <div><TextField name='city'
+                    label='City*'
+                    value={addr.city}
+                    onChange={this.handleInputChange}
+                    helperText={this.state.errors.city}
+                    error={this.state.errors.isCityError}
+                /></div>
+                <div><TextField name='state'
+                    label='State*'
+                    value={addr.state}
+                    onChange={this.handleInputChange}
+                    helperText={this.state.errors.state}
+                    error={this.state.errors.isStateError}
+                /></div>
+                <div><TextField name='zip'
+                    label='Zip Code*'
+                    value={addr.zip}
+                    onChange={this.handleInputChange}
+                    helperText={this.state.errors.zip}
+                    error={this.state.errors.isZipError}
+                /></div>
+                <div><TextField name='phone'
+                    label='Phone*'
+                    value={addr.phone}
+                    onChange={this.handleInputChange}
+                    helperText={this.state.errors.phone}
+                    error={this.state.errors.isPhoneError}
+                /></div>
+                <Button type='submit' variant='outlined'>{this.state.buttonText}</Button>
             </form>
         );
     }
@@ -80,14 +207,16 @@ class AddressBook extends React.Component {
     renderAddress(address) {
         return (
             <li key={address}>
-                <div className='name'>{address.name}</div>
-                <div className='address'>Address: </div>
+                <div className='name'>{address.name}
+                    <Button variant='text' onClick={() => this.props.onEdit(address)}>Edit</Button>
+                    <Button variant='text' onClick={() => this.props.onDelete(address)}>Delete</Button>
+                </div>
+                
                 <div className='addrline'>{address.line1}</div>
                 <div className='addrline'>{address.line2}</div>
                 <div className='addrline'>{address.city} {address.state} {address.zip}</div>
-                <div className='phone'>Phone: {address.phone}</div>
-                <button className='edit' onClick={() => this.props.onEdit(address)}>Edit</button>
-                <button className='delete' onClick={() => this.props.onDelete(address)}>Delete</button>
+                <div className='addrline'>{address.phone}</div>
+                
             </li>
         )
     }
@@ -95,7 +224,7 @@ class AddressBook extends React.Component {
     render() {
         return (
             <ul>
-                {Object.getOwnPropertyNames(this.props.addresses).map((key) => { return this.renderAddress(this.props.addresses[key]) })}
+                {Object.getOwnPropertyNames(this.props.addresses).map((key) => this.renderAddress(this.props.addresses[key]))}
             </ul>
         )
     }

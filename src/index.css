@@ -1,7 +1,13 @@
 ﻿.addrline {
     padding-left: 20px;
 }
-.name, .address, .phone{font-weight:bold;}
-.name{text-transform:uppercase}
+.name {
+    text-transform: uppercase;
+    font-weight:bold;
+}
 
 li {padding-bottom: 20px;}
+
+body {
+    background-color:#eeeeee;
+}
