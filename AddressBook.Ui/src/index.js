@@ -9,13 +9,13 @@ class AddressForm extends React.Component {
         super(props);
         this.state = {
             address: {
-                name: '',
-                line1: '',
-                line2: '',
-                city: '',
-                state: '',
-                zip: '',
-                phone: ''
+                Name: '',
+                Line1: '',
+                Line2: '',
+                City: '',
+                State: '',
+                Zip: '',
+                Phone: ''
             },
             errors: {
                 name: '',
@@ -67,52 +67,52 @@ class AddressForm extends React.Component {
             isPhoneError: false
         };
 
-        if (this.state.address.name.trim() === "") {
+        if (this.state.address.Name.trim() === "") {
             isError = true;
             errors.name = 'Required';
             errors.isNameError = true;
         }
 
-        if (this.state.address.line1.trim() === "") {
+        if (this.state.address.Line1.trim() === "") {
             isError = true;
             errors.line1 = 'Required';
             errors.isLine1Error = true;
         }
 
-        if (this.state.address.city.trim() === "") {
+        if (this.state.address.City.trim() === "") {
             isError = true;
             errors.city = 'Required';
             errors.isCityError = true;
         }
 
-        if (this.state.address.state.trim() === "") {
+        if (this.state.address.State.trim() === "") {
             isError = true;
             errors.state = 'Required';
             errors.isStateError = true;
         }
-        else if (!/^[A-Z]{2}$/.test(this.state.address.state)) {
+        else if (!/^[A-Z]{2}$/.test(this.state.address.State)) {
             isError = true;
             errors.state = 'Please enter a valid two digit state code.';
             errors.isStateError = true;
         }
 
-        if (this.state.address.zip.trim() === "") {
+        if (this.state.address.Zip.trim() === "") {
             isError = true;
             errors.zip = 'Required';
             errors.isZipError = true;
         }
-        else if (!/\d{5}(-\d{4})?/.test(this.state.address.zip)) {
+        else if (!/\d{5}(-\d{4})?/.test(this.state.address.Zip)) {
             isError = true;
             errors.zip = 'Please enter a valid zip code.';
             errors.isZipError = true;
         }
 
-        if (this.state.address.phone.trim() === "") {
+        if (this.state.address.Phone.trim() === "") {
             isError = true;
             errors.phone = 'Required';
             errors.isPhoneError = true;
         }
-        else if (!/\d{3}-?\d{3}-?\d{4}/.test(this.state.address.phone))
+        else if (!/\d{3}-?\d{3}-?\d{4}/.test(this.state.address.Phone))
         {
             isError = true;
             errors.phone = 'Please enter a valid phone number'
@@ -133,13 +133,13 @@ class AddressForm extends React.Component {
             this.props.Save(this.state.address);
             this.setState({
                 address: {
-                    name: '',
-                    line1: '',
-                    line2: '',
-                    city: '',
-                    state: '',
-                    zip: '',
-                    phone: ''
+                    Name: '',
+                    Line1: '',
+                    Line2: '',
+                    City: '',
+                    State: '',
+                    Zip: '',
+                    Phone: ''
                 },
                 buttonText: 'Add'
             });
@@ -150,49 +150,49 @@ class AddressForm extends React.Component {
         const addr = this.state.address;
         return (
             <form onSubmit={this.handleSubmit}>
-                <TextField name='name'
+                <TextField name='Name'
                     label='Contact Name*'
-                    value={addr.name}
+                    value={addr.Name}
                     onChange={this.handleInputChange}
                     helperText={this.state.errors.name}
                     error={this.state.errors.isNameError}
                 />
-                <div><TextField name='line1'
+                <div><TextField name='Line1'
                     label='Street Address 1*'
-                    value={addr.line1}
+                    value={addr.Line1}
                     onChange={this.handleInputChange}
                     helperText={this.state.errors.line1}
                     error={this.state.errors.isLine1Error}
                 /></div>
-                <div><TextField name='line2'
+                <div><TextField name='Line2'
                     label='Street Address 2'
-                    value={addr.line2}
+                    value={addr.Line2}
                     onChange={this.handleInputChange}
                 /></div>
-                <div><TextField name='city'
+                <div><TextField name='City'
                     label='City*'
-                    value={addr.city}
+                    value={addr.City}
                     onChange={this.handleInputChange}
                     helperText={this.state.errors.city}
                     error={this.state.errors.isCityError}
                 /></div>
-                <div><TextField name='state'
+                <div><TextField name='State'
                     label='State*'
-                    value={addr.state}
+                    value={addr.State}
                     onChange={this.handleInputChange}
                     helperText={this.state.errors.state}
                     error={this.state.errors.isStateError}
                 /></div>
-                <div><TextField name='zip'
+                <div><TextField name='Zip'
                     label='Zip Code*'
-                    value={addr.zip}
+                    value={addr.Zip}
                     onChange={this.handleInputChange}
                     helperText={this.state.errors.zip}
                     error={this.state.errors.isZipError}
                 /></div>
-                <div><TextField name='phone'
+                <div><TextField name='Phone'
                     label='Phone*'
-                    value={addr.phone}
+                    value={addr.Phone}
                     onChange={this.handleInputChange}
                     helperText={this.state.errors.phone}
                     error={this.state.errors.isPhoneError}
@@ -206,16 +206,16 @@ class AddressForm extends React.Component {
 class AddressBook extends React.Component {
     renderAddress(address) {
         return (
-            <li key={address}>
-                <div className='name'>{address.name}
+            <li key={address.Id}>
+                <div className='name'>{address.Name}
                     <Button variant='text' onClick={() => this.props.onEdit(address)}>Edit</Button>
                     <Button variant='text' onClick={() => this.props.onDelete(address)}>Delete</Button>
                 </div>
                 
-                <div className='addrline'>{address.line1}</div>
-                <div className='addrline'>{address.line2}</div>
-                <div className='addrline'>{address.city} {address.state} {address.zip}</div>
-                <div className='addrline'>{address.phone}</div>
+                <div className='addrline'>{address.Line1}</div>
+                <div className='addrline'>{address.Line2}</div>
+                <div className='addrline'>{address.City} {address.State} {address.Zip}</div>
+                <div className='addrline'>{address.Phone}</div>
                 
             </li>
         )
@@ -234,25 +234,44 @@ class Controller extends React.Component {
     constructor(props) {
         super(props);
 
-        const address = {};
-        address[1] = { id: 1, name: 'Eric Steuart', line1: '123 Main St', line2: 'Apt 23', city: 'SLC', state: 'UT', zip: '84110', phone: '801-555-1212' };
-
         this.state = {
-            addresses: address,
-            nextId: 2,
+            addresses: {},
+            nextId: 1,
             startEdit: (address) => { return; }
         };
     }
 
+    componentDidMount() {
+        fetch('http://localhost:52144/api/Address')
+            .then((response) => response.json())
+            .then((response) => {
+                const addressArray = response;
+                const addresses = {};
+                let maxId = 1;
+
+                addressArray.forEach((obj) => {
+                    obj.Line2 = obj.Line2 || '';
+                    addresses[obj.Id] = obj;
+                    if (obj.Id > maxId) {
+                        maxId = obj.Id + 1;
+                    }
+                });
+                this.setState({
+                    addresses: addresses,
+                    nextId: maxId
+                });
+            }, (error) => alert('An error occurred: ' + error));
+    }
+
     onSave(address) {
         const a = Object.assign({}, address);
-        if (a.id === undefined) {
-            a.id = this.state.nextId;
+        if (a.Id === undefined) {
+            a.Id = this.state.nextId;
             this.setState({ nextId: this.state.nextId + 1 });
         }
 
         const addresses = JSON.parse(JSON.stringify(this.state.addresses));
-        addresses[a.id] = a;
+        addresses[a.Id] = a;
         this.setState({ addresses: addresses });
     }
 
@@ -266,7 +285,7 @@ class Controller extends React.Component {
 
     onDelete(address) {
         const addresses = JSON.parse(JSON.stringify(this.state.addresses));
-        delete addresses[address.id];
+        delete addresses[address.Id];
         this.setState({ addresses: addresses });
     }
 
