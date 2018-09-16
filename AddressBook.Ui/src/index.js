@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './index.css';
 
+window.dataUrl = 'http://localhost:52144/api/Address';
+
 class AddressForm extends React.Component {
     constructor(props) {
         super(props);
@@ -242,7 +244,7 @@ class Controller extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:52144/api/Address')
+        fetch(window.dataUrl)
             .then((response) => response.json())
             .then((response) => {
                 const addressArray = response;
@@ -264,15 +266,23 @@ class Controller extends React.Component {
     }
 
     onSave(address) {
-        const a = Object.assign({}, address);
-        if (a.Id === undefined) {
-            a.Id = this.state.nextId;
-            this.setState({ nextId: this.state.nextId + 1 });
-        }
+        const a = Object.assign({}, address); //copy the address object so setting the id doesn't alter the state of the address form.
 
-        const addresses = JSON.parse(JSON.stringify(this.state.addresses));
-        addresses[a.Id] = a;
-        this.setState({ addresses: addresses });
+        fetch(window.dataUrl, {
+            method: "POST", headers: { "Content-type": "application/json; charset=UTF-8" }, body: JSON.stringify(a)
+        }).then((response) => response.json())
+          .then(
+            (response) => {
+                if (a.Id === undefined) {
+                    a.Id = response.Id;
+                }
+
+                const addresses = JSON.parse(JSON.stringify(this.state.addresses)); //make a deep copy
+                addresses[a.Id] = a;
+                this.setState({ addresses: addresses });
+            },
+            (error) => alert('Push request caused an error: ' + error)
+        );
     }
 
     onEdit(address) {
@@ -284,9 +294,15 @@ class Controller extends React.Component {
     }
 
     onDelete(address) {
-        const addresses = JSON.parse(JSON.stringify(this.state.addresses));
-        delete addresses[address.Id];
-        this.setState({ addresses: addresses });
+        fetch(window.dataUrl + '/' + address.Id, {
+            method: "POST"
+        }).then((response) => {
+            if (response.ok) {
+                const addresses = JSON.parse(JSON.stringify(this.state.addresses));
+                delete addresses[address.Id];
+                this.setState({ addresses: addresses });
+            }
+        });
     }
 
     render() {
