@@ -24,7 +24,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AddressBook.Ui", "AddressBo
 		SlnRelativePath = "AddressBook.Ui\"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Api", "AddressBook.Api\AddressBook.Api\AddressBook.Api.csproj", "{DC1AD03F-C176-4C91-A47D-7E6CF54B65E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressBook.Api", "AddressBook.Api\AddressBook.Api.csproj", "{DC1AD03F-C176-4C91-A47D-7E6CF54B65E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +33,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A8A08F56-F78F-4C96-9F18-E8649D030E48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8A08F56-F78F-4C96-9F18-E8649D030E48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8A08F56-F78F-4C96-9F18-E8649D030E48}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8A08F56-F78F-4C96-9F18-E8649D030E48}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{DC1AD03F-C176-4C91-A47D-7E6CF54B65E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC1AD03F-C176-4C91-A47D-7E6CF54B65E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC1AD03F-C176-4C91-A47D-7E6CF54B65E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
